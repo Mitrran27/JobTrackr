@@ -1,0 +1,206 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum JobStatus {
+  SAVED
+  WAITING
+  IN_PROGRESS
+  INTERVIEW
+  OFFER
+  CLOSED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  resetTokenHash String?
+  resetExpires DateTime?
+  createdAt    DateTime @default(now())
+
+  profile        Profile?
+  careerPlan     CareerPlan?
+  educations     Education[]
+  experiences    Experience[]
+  skills         Skill[]
+  projects       Project[]
+  certifications Certification[]
+  publications   Publication[]
+  references     Reference[]
+  jobs           Job[]
+  files          FileAsset[]
+}
+
+model Profile {
+  id                String  @id @default(cuid())
+  userId            String  @unique
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName          String  @default("")
+  headline          String  @default("")
+  email             String  @default("")
+  phone             String  @default("")
+  location          String  @default("")
+  linkedin          String  @default("")
+  github            String  @default("")
+  website           String  @default("")
+  summary           String  @default("") @db.Text
+  currentSalary     Float?
+  salaryCurrency    String  @default("MYR")
+  salaryPeriod      String  @default("MONTH") // MONTH | YEAR
+  targetIncreaseMin Int     @default(20)
+  targetIncreaseMax Int     @default(30)
+  cvText            String? @db.Text
+  cvFileId          String?
+  remindersEnabled  Boolean @default(true)
+  updatedAt         DateTime @updatedAt
+}
+
+model CareerPlan {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  targetRole       String    @default("")
+  targetIndustries String    @default("")
+  targetLocations  String    @default("")
+  targetDate       DateTime?
+  notes            String    @default("") @db.Text
+  updatedAt        DateTime  @updatedAt
+}
+
+model Education {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  institution   String
+  qualification String   @default("")
+  location      String   @default("")
+  startDate     String   @default("")
+  endDate       String   @default("")
+  details       String[]
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  @@index([userId])
+}
+
+model Experience {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   String
+  title     String   @default("")
+  location  String   @default("")
+  startDate String   @default("")
+  endDate   String   @default("")
+  current   Boolean  @default(false)
+  salary    Float?
+  bullets   String[]
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  category  String   @default("General")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  role        String   @default("")
+  url         String   @default("")
+  description String   @default("") @db.Text
+  tech        String[]
+  imageIds    String[]
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  @@index([userId])
+}
+
+model Certification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  issuer    String   @default("")
+  url       String   @default("")
+  date      String   @default("")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model Publication {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  citation  String   @db.Text
+  url       String   @default("")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model Reference {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  role      String   @default("")
+  company   String   @default("")
+  email     String   @default("")
+  phone     String   @default("")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
+
+model Job {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  url            String    @default("")
+  title          String
+  company        String    @default("")
+  location       String    @default("")
+  description    String    @default("") @db.Text
+  salaryText     String    @default("")
+  employmentType String    @default("")
+  status         JobStatus @default(SAVED)
+  matchScore     Int?
+  matchDetails   Json?
+  notes          String    @default("") @db.Text
+  appliedAt      DateTime?
+  interviewAt    DateTime?
+  followUpAt     DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  @@index([userId, status])
+}
+
+model FileAsset {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  mime      String
+  data      Bytes
+  createdAt DateTime @default(now())
+  @@index([userId])
+}
