@@ -29,7 +29,7 @@ export class MailService {
     if (!this.transporter) return false;
     try {
       await this.transporter.sendMail({
-        from: process.env.MAIL_FROM || `JobTrackr <${process.env.SMTP_USER}>`,
+        from: process.env.MAIL_FROM || `Landed <${process.env.SMTP_USER}>`,
         to,
         subject,
         html,
@@ -44,18 +44,18 @@ export class MailService {
   private wrap(title: string, body: string) {
     return `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:24px;color:#1f2937">
       <h2 style="margin:0 0 16px;color:#4338ca">${esc(title)}</h2>${body}
-      <p style="margin-top:32px;font-size:12px;color:#6b7280">Sent by JobTrackr</p></div>`;
+      <p style="margin-top:32px;font-size:12px;color:#6b7280">Sent by Landed</p></div>`;
   }
 
   welcome(to: string, name: string) {
     const url = process.env.APP_URL || '';
     return this.send(
       to,
-      'Welcome to JobTrackr',
+      'Welcome to Landed',
       this.wrap(
         `Welcome, ${name}!`,
         `<p>Your account is ready. Upload your CV, fill in your profile and start saving jobs.</p>
-         <p><a href="${esc(url)}" style="background:#4f46e5;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none">Open JobTrackr</a></p>`,
+         <p><a href="${esc(url)}" style="background:#4f46e5;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none">Open Landed</a></p>`,
       ),
     );
   }
@@ -64,7 +64,7 @@ export class MailService {
     const link = `${process.env.APP_URL || ''}/reset?token=${encodeURIComponent(token)}`;
     return this.send(
       to,
-      'Reset your JobTrackr password',
+      'Reset your Landed password',
       this.wrap(
         'Reset your password',
         `<p>Click the button below to choose a new password. The link is valid for 1 hour.</p>
@@ -78,6 +78,6 @@ export class MailService {
     const rows = items
       .map((i) => `<li style="margin-bottom:8px"><b>${esc(i.kind)}</b>: ${esc(i.title)}<br><span style="color:#6b7280">${esc(i.when)}</span></li>`)
       .join('');
-    return this.send(to, `JobTrackr: ${items.length} item(s) need your attention`, this.wrap(`Hi ${name}, here is your day`, `<ul style="padding-left:18px">${rows}</ul>`));
+    return this.send(to, `Landed: ${items.length} item(s) need your attention`, this.wrap(`Hi ${name}, here is your day`, `<ul style="padding-left:18px">${rows}</ul>`));
   }
 }

@@ -1,0 +1,388 @@
+{
+  "skills": [
+    {
+      "name": "Python (Image Processing)",
+      "category": "Programming Languages"
+    },
+    {
+      "name": "C++",
+      "category": "Programming Languages"
+    },
+    {
+      "name": "Vue.js",
+      "category": "Frontend"
+    },
+    {
+      "name": "Svelte",
+      "category": "Frontend"
+    },
+    {
+      "name": "HTML5",
+      "category": "Frontend"
+    },
+    {
+      "name": "CSS",
+      "category": "Frontend"
+    },
+    {
+      "name": "Bootstrap 5",
+      "category": "Frontend"
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend"
+    },
+    {
+      "name": "GraphQL",
+      "category": "Backend"
+    },
+    {
+      "name": "Tesseract OCR",
+      "category": "Backend"
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Database"
+    },
+    {
+      "name": "MySQL",
+      "category": "Database"
+    },
+    {
+      "name": "Figma",
+      "category": "Tools & Technologies"
+    },
+    {
+      "name": "Git",
+      "category": "Tools & Technologies"
+    },
+    {
+      "name": "Android Studio",
+      "category": "Tools & Technologies"
+    },
+    {
+      "name": "Framer",
+      "category": "Tools & Technologies"
+    },
+    {
+      "name": "Creativity",
+      "category": "Soft Skills"
+    },
+    {
+      "name": "Teamwork",
+      "category": "Soft Skills"
+    },
+    {
+      "name": "Time Management",
+      "category": "Soft Skills"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Phish2Go",
+      "role": "Personal project · UI/UX",
+      "url": "https://www.figma.com/design/rybDkU2AhzXpdIrFsDCeRB/Mitrran-Menon-s-Phish2Go?node-id=411-618&t=m35T0Sk13SQOdvFs-1",
+      "description": "Mobile app design that connects fishermen directly with buyers, with real-time market information and learning resources to improve their skills. Removes intermediaries to raise fishermen's income and promote sustainable fishing.",
+      "tech": [
+        "Figma"
+      ],
+      "images": [
+        "images/phish2go-1.jpg",
+        "images/phish2go-2.jpg",
+        "images/phish2go-3.jpg",
+        "images/phish2go-4.jpg"
+      ],
+      "remoteImages": []
+    },
+    {
+      "name": "FYP Learning Platform",
+      "role": "Final Year Project · AI, Website",
+      "url": "https://github.com/Mitrran27/MSU-Platform-FYP",
+      "description": "Full-stack learning platform that brings learning, collaboration and communication for students into one system. Includes a discussion forum, resource sharing, real-time chat, an AI chatbot assistant and announcement management.",
+      "tech": [
+        "PostgreSQL",
+        "AngularJS",
+        "Java",
+        "Python"
+      ],
+      "images": [
+        "images/fyp-learning-platform-1.jpg",
+        "images/fyp-learning-platform-2.jpg",
+        "images/fyp-learning-platform-3.jpg",
+        "images/fyp-learning-platform-4.jpg"
+      ],
+      "remoteImages": []
+    },
+    {
+      "name": "Finance Tracker",
+      "role": "Personal project · Website",
+      "url": "https://finance-tracker-theta-fawn.vercel.app/auth",
+      "description": "Personal finance web app for managing money in one place, with a clean dark-themed dashboard. Built with a SvelteKit frontend and a Node.js / PostgreSQL backend.",
+      "tech": [
+        "Svelte",
+        "Node.js",
+        "NeonDB"
+      ],
+      "images": [
+        "images/finance-tracker-1.jpg",
+        "images/finance-tracker-2.jpg",
+        "images/finance-tracker-3.jpg",
+        "images/finance-tracker-4.jpg"
+      ],
+      "remoteImages": []
+    },
+    {
+      "name": "Habit Tracker",
+      "role": "Personal project · Mobile app",
+      "url": "https://github.com/Mitrran27/Habit-Tracker",
+      "description": "Mobile-focused habit tracker where users create daily habits, monitor streaks and visualise progress over time. Built with a ReactJS frontend, Node.js backend and PostgreSQL database.",
+      "tech": [
+        "React",
+        "Node.js",
+        "PostgreSQL"
+      ],
+      "images": [
+        "images/habit-tracker-1.jpg",
+        "images/habit-tracker-2.jpg",
+        "images/habit-tracker-3.jpg",
+        "images/habit-tracker-4.jpg"
+      ],
+      "remoteImages": []
+    },
+    {
+      "name": "Invoice Generator",
+      "role": "Personal project · Website",
+      "url": "https://github.com/Mitrran27/Invoice-Generator",
+      "description": "Invoicing web app for freelancers and small businesses to create, manage and process invoices. Uses Tesseract OCR to extract data from uploaded documents, with a Node.js REST API and PostgreSQL on Neon.",
+      "tech": [
+        "PostgreSQL",
+        "React",
+        "Node.js"
+      ],
+      "images": [
+        "images/invoice-generator-1.jpg",
+        "images/invoice-generator-2.jpg",
+        "images/invoice-generator-3.jpg",
+        "images/invoice-generator-4.jpg"
+      ],
+      "remoteImages": []
+    },
+    {
+      "name": "EventGo",
+      "role": "Freelance project · Website, AI",
+      "url": "https://github.com/Mitrran27/EventGo",
+      "description": "Event planning platform for organising events within budget: manage budgets, compare vendors and track expenses in one place. Built with Node.js, Express, PostgreSQL and Prisma ORM with JWT authentication, plus an AI chat assistant powered by Ollama.",
+      "tech": [
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "Prisma ORM",
+        "Ollama"
+      ],
+      "images": [
+        "images/eventgo-1.jpg",
+        "images/eventgo-2.jpg",
+        "images/eventgo-3.jpg",
+        "images/eventgo-4.jpg"
+      ],
+      "remoteImages": []
+    },
+    {
+      "name": "FloraScan",
+      "role": "Personal project · Web app, AI",
+      "url": "https://github.com/Mitrran27/FloraScan",
+      "description": "AI-powered plant care web app (PlantDoc AI) that analyses plant images to identify species, detect health issues and recommend treatments, with health tracking and care reminders. Powered by Google Gemini and Firebase.",
+      "tech": [
+        "React",
+        "Firebase",
+        "Google Gemini AI"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1778479739298_efo2u.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1778479739728_ipb3o.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1778479739643_5jsid.png"
+      ]
+    },
+    {
+      "name": "ResQMeal",
+      "role": "Personal project · Mobile app · In progress",
+      "url": "https://github.com/Mitrran27/ResQMeal",
+      "description": "Platform that reduces food waste by letting local vendors sell unsold food at discounted prices near closing time. Made up of a customer app, a vendor app and a vendor analytics dashboard.",
+      "tech": [
+        "PostgreSQL",
+        "Node.js",
+        "Flutter"
+      ],
+      "images": [
+        "images/resqmeal-1.jpg"
+      ],
+      "remoteImages": []
+    },
+    {
+      "name": "TTL",
+      "role": "Work project · Web app",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787397429446_aonky.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787397428749_6vwjw.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787397428752_7ra6y.png"
+      ]
+    },
+    {
+      "name": "DBKL",
+      "role": "Work project · Web app",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398089446_32lfo.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398089222_e6ude.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398088808_c89h1.png"
+      ]
+    },
+    {
+      "name": "UCC",
+      "role": "Work project · Web app",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398052948_okdfq.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398052746_vwdfp.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398052382_sg5f8.png"
+      ]
+    },
+    {
+      "name": "Energy Audit APU",
+      "role": "Work project · Web app",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398131071_8iege.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398131175_zxjj2.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398130503_i7mhq.png"
+      ]
+    },
+    {
+      "name": "UCI OCR",
+      "role": "Work project · Web app, AI",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL",
+        "Python",
+        "MinerU"
+      ],
+      "images": [],
+      "remoteImages": []
+    },
+    {
+      "name": "EzycallAI",
+      "role": "Work project · Web app, AI",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL",
+        "Python",
+        "AWS Bedrock"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398247795_9l4z9.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398248604_2ouyo.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398248400_m792p.png"
+      ]
+    },
+    {
+      "name": "Energy Intelligence",
+      "role": "Work project · Web app, AI",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL",
+        "Python",
+        "AWS Bedrock"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398296784_w6u5d.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398296446_5p2pe.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398296649_oyxdi.png"
+      ]
+    },
+    {
+      "name": "Lorry System",
+      "role": "Work project · Web app",
+      "url": "",
+      "description": "",
+      "tech": [
+        "Node.js",
+        "SvelteKit",
+        "PostgreSQL"
+      ],
+      "images": [],
+      "remoteImages": [
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398334871_hozqx.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398334829_o4xkq.png",
+        "https://tqugmudnwgbbbubkgrpo.supabase.co/storage/v1/object/public/portfolio-assets/projects/screenshot_1787398334965_ag95r.png"
+      ]
+    },
+    {
+      "name": "Smart Energy Usage",
+      "role": "UI/UX · Under construction",
+      "url": "",
+      "description": "",
+      "tech": [],
+      "images": [],
+      "remoteImages": []
+    },
+    {
+      "name": "Restaurant ordering",
+      "role": "Web app · Under construction",
+      "url": "",
+      "description": "",
+      "tech": [],
+      "images": [],
+      "remoteImages": []
+    },
+    {
+      "name": "Vendor / Supplier Management System",
+      "role": "Web app · In progress",
+      "url": "",
+      "description": "",
+      "tech": [],
+      "images": [],
+      "remoteImages": []
+    }
+  ]
+}

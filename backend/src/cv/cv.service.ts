@@ -184,25 +184,50 @@ export class CvService {
           e.bullets.forEach(bullet);
         });
       }
-      if (s === 'projects' && projects.length) {
-        heading('Projects');
-        projects.forEach((p, i) => {
-          if (i) doc.y += 3;
-          row(p.name + (p.role ? `  (${p.role})` : ''), p.url ? 'Link' : '', true);
+      if (s === 'projects') {
+        // skip placeholder entries that have nothing to show
+        const shown = projects.filter((p) => p.description || p.tech.length || p.imageIds.some((id) => imageBuffers.has(id)));
+        if (shown.length) heading('Projects');
+        shown.forEach((p, i) => {
+          if (i) doc.y += 5;
+          const link = (p.url || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+          // keep a project's text and screenshots together on one page
+          doc.font('Times-Roman').fontSize(FS);
+          const hasImgs = p.imageIds.slice(0, 3).some((id) => imageBuffers.has(id));
+          const need =
+            16 + (p.role ? 14 : 0) + (p.description ? doc.heightOfString(p.description, { width: W }) + 2 : 0) +
+            (p.tech.length ? 16 : 0) + (hasImgs ? 104 : 0);
+          ensure(need);
+          row(p.name, link.length > 46 ? link.slice(0, 45) + '…' : link, true);
+          if (p.role) row(p.role, '', false, true);
           if (p.description) para(p.description);
-          if (p.tech.length) row(`Tech: ${p.tech.join(', ')}`, '', false, true);
+          if (p.tech.length) {
+            doc.font('Times-Bold').fontSize(FS);
+            const label = 'Tech: ';
+            const lw = doc.widthOfString(label);
+            doc.font('Times-Roman');
+            const h = doc.heightOfString(p.tech.join(', '), { width: W - lw });
+            ensure(h);
+            const y = doc.y;
+            doc.font('Times-Bold').text(label, L, y, { width: lw + 2, lineBreak: false });
+            doc.font('Times-Roman').text(p.tech.join(', '), L + lw, y, { width: W - lw });
+            doc.y = y + Math.max(h, FS * 1.2);
+          }
           const imgs = p.imageIds.slice(0, 3).map((id) => imageBuffers.get(id)).filter(Boolean);
           if (imgs.length) {
-            ensure(88);
-            const y = doc.y + 3;
+            const boxW = (W - 2 * 8) / 3;
+            const boxH = 96;
+            ensure(boxH + 6);
+            const y = doc.y + 4;
             imgs.forEach((buf, k) => {
               try {
-                doc.image(buf, L + k * 130, y, { fit: [120, 80] });
+                doc.image(buf, L + k * (boxW + 8), y, { fit: [boxW, boxH], align: 'center', valign: 'center' });
+                doc.rect(L + k * (boxW + 8), y, boxW, boxH).lineWidth(0.4).strokeColor('#cccccc').stroke();
               } catch {
                 /* skip unsupported image */
               }
             });
-            doc.y = y + 84;
+            doc.y = y + boxH + 4;
           }
         });
       }
