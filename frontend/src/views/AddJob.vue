@@ -14,6 +14,7 @@ const saving = ref(false);
 const err = ref('');
 const match = ref(null);
 const source = ref('');
+const warning = ref('');
 const job = reactive({ url: '', title: '', company: '', location: '', description: '', salaryText: '', employmentType: '', status: 'SAVED', notes: '' });
 
 async function analyse() {
@@ -22,11 +23,14 @@ async function analyse() {
   if (pasteMode.value && rawText.value.trim().length < 40) return (err.value = 'Paste the full job description');
   busy.value = true;
   match.value = null;
+  warning.value = '';
   try {
     const { data } = await api.post('/jobs/preview', { url: url.value.trim(), rawText: pasteMode.value ? rawText.value : undefined });
     Object.assign(job, data.job, { status: job.status, notes: job.notes });
     match.value = data.match;
     source.value = data.job.source;
+    warning.value = data.job.warning || '';
+    if (warning.value) pasteMode.value = true; // let the user add the full description
   } catch (e) {
     err.value = errMsg(e);
     if (!pasteMode.value) pasteMode.value = true;
@@ -76,6 +80,7 @@ async function save() {
     </form>
 
     <template v-if="match">
+      <div v-if="warning" class="alert info">{{ warning }} Use the box above, then press Analyse job again.</div>
       <MatchPanel :match="match" />
 
       <form class="card stack" @submit.prevent="save">

@@ -13,6 +13,7 @@ export interface ExtractedJob {
   salaryText: string;
   employmentType: string;
   source: 'structured' | 'page' | 'text';
+  warning?: string;
 }
 
 const UA =
@@ -152,13 +153,31 @@ export class ExtractorService {
       title = clean(m[1]);
       company = clean(m[2].replace(/\s*[|\-–—].*$/, ''));
     }
+    const metaDesc = clean(og('og:description') || og('description') || og('twitter:description'), 2000);
     $('script,style,noscript,nav,footer,header,svg,form,iframe').remove();
     const scope = $('main').length ? $('main') : $('article').length ? $('article') : $('body');
     const text = htmlToText(scope.html() || '').slice(0, 15000);
+
     if (text.length < 200) {
-      throw new BadRequestException(
-        'Could not read the job details from this page (many sites such as LinkedIn or Indeed block automated access). Paste the job description instead.',
-      );
+      // Pages built with JavaScript (JobStreet, LinkedIn, Indeed...) or bot-check pages have no readable body
+      const blocked = /just a moment|access denied|attention required|are you a robot|captcha|verify you are human|sign in|log in|403|forbidden/i;
+      if (!title || blocked.test(title) || blocked.test(metaDesc)) {
+        throw new BadRequestException(
+          'This site did not let me read the job (it blocks automated access). Paste the job description instead and I will still score it.',
+        );
+      }
+      return {
+        url: finalUrl,
+        title,
+        company,
+        location: '',
+        description: [metaDesc, text].filter(Boolean).join('\n\n'),
+        salaryText: '',
+        employmentType: '',
+        source: 'page',
+        warning:
+          'This site loads its job details with JavaScript, so I could only read the title and a short summary. Paste the full job description for an accurate match score.',
+      };
     }
     return { url: finalUrl, title, company, location: '', description: text, salaryText: '', employmentType: '', source: 'page' };
   }
