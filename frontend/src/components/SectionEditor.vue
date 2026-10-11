@@ -1,22 +1,40 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import api, { errMsg, fileUrl } from '../api';
+import { readCache, writeCache } from '../cache';
 
 const props = defineProps({ config: { type: Object, required: true } });
 const emit = defineEmits(['changed']);
 
-const items = ref([]);
-const loading = ref(true);
+const cacheKey = () => `section:${props.config.section}`;
+const items = ref(readCache(cacheKey()) || []);
+const loading = ref(!readCache(cacheKey()));
 const editing = ref(null); // null | 'new' | item id
 const draft = ref({});
 const err = ref('');
 const saving = ref(false);
 const uploading = ref(false);
 
+/** Compact sections (skills) are shown grouped under their category */
+const groups = computed(() => {
+  const key = props.config.groupBy;
+  if (!key) return [{ name: '', items: items.value }];
+  const map = new Map();
+  items.value.forEach((it) => {
+    const g = it[key] || 'Other';
+    if (!map.has(g)) map.set(g, []);
+    map.get(g).push(it);
+  });
+  return [...map].map(([name, list]) => ({ name, items: list }));
+});
+
 async function load() {
-  loading.value = true;
+  const cached = readCache(cacheKey());
+  if (cached) items.value = cached; // show last known entries straight away
+  loading.value = !cached;
   try {
     items.value = (await api.get(`/profile/section/${props.config.section}`)).data;
+    writeCache(cacheKey(), items.value);
   } catch (e) {
     err.value = errMsg(e);
   }
@@ -172,15 +190,22 @@ async function upload(key, ev) {
       </div>
     </form>
 
-    <div v-if="loading" class="empty"><div class="spinner dark" style="margin: auto"></div></div>
+    <div v-if="loading" class="stack" style="gap: 10px">
+      <div v-for="n in 3" :key="n" class="skeleton" style="height: 58px"></div>
+    </div>
     <div v-else-if="!items.length && !editing" class="empty card flat">Nothing here yet. Use “{{ config.addLabel }}” to start.</div>
 
-    <div v-else-if="config.compact" class="chips">
-      <span v-for="it in items" :key="it.id" class="chip" style="padding-right: 6px">
-        {{ config.title(it) }}<span v-if="config.sub(it)" class="muted"> · {{ config.sub(it) }}</span>
-        <button type="button" class="btn ghost icon sm" style="padding: 0 6px" aria-label="Edit" @click="startEdit(it)">✎</button>
-        <button type="button" class="btn ghost icon sm" style="padding: 0 6px" aria-label="Delete" @click="remove(it)">×</button>
-      </span>
+    <div v-else-if="config.compact" class="stack" style="gap: 14px">
+      <div v-for="g in groups" :key="g.name">
+        <div v-if="g.name" class="group-title">{{ g.name }} <span class="muted">{{ g.items.length }}</span></div>
+        <div class="chips">
+          <span v-for="it in g.items" :key="it.id" class="chip" style="padding-right: 6px">
+            {{ config.title(it) }}
+            <button type="button" class="btn ghost icon sm" style="padding: 0 6px" aria-label="Edit" @click="startEdit(it)">✎</button>
+            <button type="button" class="btn ghost icon sm" style="padding: 0 6px" aria-label="Delete" @click="remove(it)">×</button>
+          </span>
+        </div>
+      </div>
     </div>
 
     <div v-else class="card flat" style="padding-top: 4px; padding-bottom: 4px">

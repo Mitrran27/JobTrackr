@@ -1,5 +1,6 @@
 import { reactive } from 'vue';
 import api from './api';
+import { clearCache } from './cache';
 
 export const auth = reactive({
   token: localStorage.getItem('jt_token') || '',
@@ -13,6 +14,7 @@ export const auth = reactive({
     this.set(data);
   },
   set(data) {
+    clearCache();
     this.token = data.token;
     this.user = data.user;
     localStorage.setItem('jt_token', data.token);
@@ -26,6 +28,7 @@ export const auth = reactive({
     }
   },
   logout() {
+    clearCache();
     this.token = '';
     this.user = null;
     localStorage.removeItem('jt_token');

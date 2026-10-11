@@ -43,6 +43,7 @@ export const SECTION_CONFIGS = {
     title: (i) => i.name,
     sub: (i) => i.category,
     compact: true,
+    groupBy: 'category',
   },
   projects: {
     section: 'projects',

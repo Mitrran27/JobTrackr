@@ -35,7 +35,7 @@ async function submit() {
 <template>
   <div class="auth-wrap">
     <form class="card auth-card stack" @submit.prevent="submit">
-      <div class="brand"><img src="/icon.svg" alt="" /> JobTrackr</div>
+      <div class="brand"><img src="/icon.svg" alt="" /> Landed</div>
       <p class="muted" style="text-align: center">
         {{ mode === 'login' ? 'Welcome back. Pick up where you left off.' : mode === 'register' ? 'Create your account to start tracking.' : 'Enter your email to get a reset link.' }}
       </p>

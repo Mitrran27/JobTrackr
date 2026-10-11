@@ -1,10 +1,10 @@
-# Prompt: build "JobTrackr" (job application tracker + PWA)
+# Prompt: build "Landed" (job application tracker + PWA)
 
 Copy everything below the line into another AI model (ChatGPT, Gemini, Cursor, etc.). It is self-contained.
 
 ---
 
-You are a senior full-stack engineer. Build a complete, production-ready web app called **JobTrackr**: a job application tracker that also installs as a PWA on phone and desktop. Deliver working code, not pseudo-code.
+You are a senior full-stack engineer. Build a complete, production-ready web app called **Landed**: a job application tracker that also installs as a PWA on phone and desktop. Deliver working code, not pseudo-code.
 
 ## 1. Tech stack (fixed)
 

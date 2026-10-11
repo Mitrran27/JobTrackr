@@ -27,7 +27,7 @@ async function submit() {
 <template>
   <div class="auth-wrap">
     <form class="card auth-card stack" @submit.prevent="submit">
-      <div class="brand"><img src="/icon.svg" alt="" /> JobTrackr</div>
+      <div class="brand"><img src="/icon.svg" alt="" /> Landed</div>
       <h2 style="text-align: center">Choose a new password</h2>
       <label class="field">New password<input v-model="password" type="password" minlength="8" required autocomplete="new-password" /></label>
       <div v-if="err" class="alert err">{{ err }}</div>

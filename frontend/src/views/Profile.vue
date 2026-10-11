@@ -1,6 +1,7 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import api, { errMsg } from '../api';
+import { readCache, writeCache } from '../cache';
 import { SECTION_CONFIGS } from '../sections';
 import SectionEditor from '../components/SectionEditor.vue';
 
@@ -15,14 +16,27 @@ const msg = ref('');
 const saving = ref(false);
 const rescoring = ref(false);
 
+// Show the last known details immediately; refresh quietly in the background
+const cached = readCache('profile');
+if (cached) Object.keys(form).forEach((k) => (form[k] = cached[k] ?? form[k]));
+const loading = ref(!cached);
+const slow = ref(false);
+const touched = ref(false); // do not overwrite what the user is already typing
+let slowTimer;
+
 onMounted(async () => {
+  slowTimer = setTimeout(() => (slow.value = true), 4000);
   try {
     const { data } = await api.get('/profile');
-    Object.keys(form).forEach((k) => (form[k] = data.profile[k] ?? form[k]));
+    if (!touched.value) Object.keys(form).forEach((k) => (form[k] = data.profile[k] ?? form[k]));
+    writeCache('profile', data.profile);
   } catch (e) {
-    err.value = errMsg(e);
+    if (!cached) err.value = errMsg(e);
   }
+  loading.value = false;
+  slow.value = false;
 });
+onBeforeUnmount(() => clearTimeout(slowTimer));
 
 async function save() {
   err.value = '';
@@ -30,6 +44,7 @@ async function save() {
   saving.value = true;
   try {
     await api.put('/profile', form);
+    writeCache('profile', { ...(readCache('profile') || {}), ...form });
     msg.value = 'Saved';
   } catch (e) {
     err.value = errMsg(e);
@@ -66,7 +81,16 @@ async function rescoreAll() {
     <button v-for="t in tabs" :key="t.key" class="tab" :class="{ on: tab === t.key }" @click="tab = t.key">{{ t.label }}</button>
   </div>
 
-  <form v-if="tab === 'personal'" class="card stack" style="max-width: 860px" @submit.prevent="save">
+  <div v-if="tab === 'personal' && loading" class="card stack" style="max-width: 860px">
+    <div class="form-grid">
+      <div v-for="n in 8" :key="n" class="skeleton" style="height: 62px"></div>
+      <div class="skeleton full" style="height: 130px"></div>
+    </div>
+    <p v-if="slow" class="small muted">Waking up the server, this can take up to a minute after it has been idle…</p>
+    <div v-if="err" class="alert err">{{ err }}</div>
+  </div>
+
+  <form v-else-if="tab === 'personal'" class="card stack" style="max-width: 860px" @input="touched = true" @submit.prevent="save">
     <div class="form-grid">
       <label class="field">Full name<input v-model="form.fullName" /></label>
       <label class="field">Headline<input v-model="form.headline" placeholder="Full-stack developer" /></label>

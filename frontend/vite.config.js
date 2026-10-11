@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'JobTrackr',
-        short_name: 'JobTrackr',
-        description: 'Track job applications, match jobs to your CV and plan your next move.',
+        name: 'Landed',
+        short_name: 'Landed',
+        description: 'Land your next job: track applications, match roles to your CV and plan your next move.',
         theme_color: '#4f46e5',
         background_color: '#f5f6fb',
         display: 'standalone',

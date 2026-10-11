@@ -26,7 +26,7 @@ function logout() {
   <router-view v-if="isPublic" />
   <div v-else class="shell">
     <aside class="side">
-      <div class="brand"><img src="/icon.svg" alt="" /> JobTrackr</div>
+      <div class="brand"><img src="/icon.svg" alt="" /> Landed</div>
       <router-link v-for="n in nav" :key="n.to" :to="n.to" class="nav-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path :d="n.icon" /></svg>
         {{ n.label === 'Home' ? 'Dashboard' : n.label === 'Jobs' ? 'Applications' : n.label === 'Add' ? 'Add a job' : n.label === 'Career' ? 'Career & income' : n.label === 'CV' ? 'CV builder' : n.label }}

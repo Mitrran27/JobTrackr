@@ -139,6 +139,9 @@ input[type='checkbox'] { width: 18px; height: 18px; padding: 0; accent-color: va
 .job-card select { margin-top: 8px; padding: 6px 8px; font-size: 0.8rem; }
 
 /* ---------- misc ---------- */
+.skeleton { border-radius: 10px; background: linear-gradient(90deg, #eceef8 25%, #f6f7fc 37%, #eceef8 63%); background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
+@keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+.group-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 8px; }
 .list-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .list-item:last-child { border-bottom: 0; }
 .thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
