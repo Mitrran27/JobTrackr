@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import api, { errMsg } from '../api';
 import { STATUSES } from '../utils';
@@ -33,7 +33,11 @@ async function analyse() {
     if (warning.value) pasteMode.value = true; // let the user add the full description
   } catch (e) {
     err.value = errMsg(e);
-    if (!pasteMode.value) pasteMode.value = true;
+    if (!pasteMode.value) {
+      pasteMode.value = true;
+      await nextTick();
+      document.getElementById('paste-box')?.focus();
+    }
   }
   busy.value = false;
 }
@@ -67,7 +71,7 @@ async function save() {
       </label>
       <label v-if="pasteMode" class="field">
         Or paste the job description
-        <textarea v-model="rawText" rows="8" placeholder="Paste the whole job post here (title on the first line works best)"></textarea>
+        <textarea id="paste-box" v-model="rawText" rows="8" placeholder="Paste the whole job post here (title on the first line works best)"></textarea>
       </label>
       <div v-if="err" class="alert err">{{ err }}</div>
       <div class="row wrap">

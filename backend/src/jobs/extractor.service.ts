@@ -19,6 +19,8 @@ export interface ExtractedJob {
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
+const UA2 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15';
+
 function isPrivateIp(ip: string): boolean {
   if (ip.includes(':')) {
     const l = ip.toLowerCase();
@@ -68,19 +70,40 @@ export class ExtractorService {
     let current = rawUrl;
     for (let i = 0; i < 4; i++) {
       const u = await this.assertPublic(current);
-      const res = await axios
-        .get<string>(u.toString(), {
+      const attempt = (ua: string, extra: Record<string, string> = {}) =>
+        axios.get<string>(u.toString(), {
           timeout: 15000,
           maxRedirects: 0,
           maxContentLength: 3_000_000,
           responseType: 'text',
-          headers: { 'User-Agent': UA, 'Accept-Language': 'en-US,en;q=0.9', Accept: 'text/html,application/xhtml+xml' },
+          headers: {
+            'User-Agent': ua,
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            ...extra,
+          },
           validateStatus: (s) => s < 400,
+        });
+      const res = await attempt(UA)
+        .catch((e) => {
+          const code = e?.response?.status;
+          // Some sites only block unknown clients: retry once as a search-engine style fetch
+          if (code === 403 || code === 429 || code === 999) {
+            return attempt(UA2, { Referer: 'https://www.google.com/' });
+          }
+          throw e;
         })
         .catch((e) => {
           const code = e?.response?.status;
           throw new BadRequestException(
-            code ? `The site refused the request (HTTP ${code}). Paste the job description instead.` : 'Could not reach that website. Paste the job description instead.',
+            code
+              ? `${new URL(rawUrl).hostname} blocks automated readers (HTTP ${code}), so I cannot open this link from the server. Paste the job description below and I will score it the same way.`
+              : 'Could not reach that website. Paste the job description instead.',
           );
         });
       if (res.status >= 300 && res.headers.location) {
