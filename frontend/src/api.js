@@ -17,7 +17,7 @@ api.interceptors.response.use(
     if (e.response?.status === 401 && !onAuthPage) {
       localStorage.removeItem('jt_token');
       location.href = '/login';
-    }
+    } 
     return Promise.reject(e);
   },
 );

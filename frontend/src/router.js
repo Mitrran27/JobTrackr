@@ -10,6 +10,8 @@ const routes = [
   { path: '/jobs/:id', component: () => import('./views/JobDetail.vue'), meta: { title: 'Job' } },
   { path: '/profile', component: () => import('./views/Profile.vue'), meta: { title: 'Profile' } },
   { path: '/career', component: () => import('./views/Career.vue'), meta: { title: 'Career & income' } },
+  { path: '/documents', component: () => import('./views/Documents.vue'), meta: { title: 'CV & cover letters' } },
+  { path: '/documents/:id', component: () => import('./views/DocumentEditor.vue'), meta: { title: 'Edit document' } },
   { path: '/cv', component: () => import('./views/CV.vue'), meta: { title: 'CV' } },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ];

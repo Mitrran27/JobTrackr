@@ -14,6 +14,7 @@ const nav = [
   { to: '/profile', label: 'Profile', icon: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0' },
   { to: '/career', label: 'Career', icon: 'M3 17l6-6 4 4 8-8M15 7h6v6' },
   { to: '/cv', label: 'CV', icon: 'M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6' },
+  { to: '/documents', label: 'Docs', full: 'CV & letters', icon: 'M8 3h8l4 4v11H8zM16 3v4h4M4 7v14h11M11 11h6M11 14h6' },
 ];
 
 function logout() {
@@ -29,7 +30,7 @@ function logout() {
       <div class="brand"><img src="/icon.svg" alt="" /> Landed</div>
       <router-link v-for="n in nav" :key="n.to" :to="n.to" class="nav-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path :d="n.icon" /></svg>
-        {{ n.label === 'Home' ? 'Dashboard' : n.label === 'Jobs' ? 'Applications' : n.label === 'Add' ? 'Add a job' : n.label === 'Career' ? 'Career & income' : n.label === 'CV' ? 'CV builder' : n.label }}
+        {{ n.label === 'Home' ? 'Dashboard' : n.label === 'Jobs' ? 'Applications' : n.label === 'Add' ? 'Add a job' : n.label === 'Career' ? 'Career & income' : n.label === 'CV' ? 'CV builder' : n.full || n.label }}
       </router-link>
       <div class="side-foot muted">
         <div style="font-weight: 600; color: var(--ink)">{{ auth.user?.name }}</div>

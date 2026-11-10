@@ -8,6 +8,11 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum DocKind {
+  CV
+  COVER_LETTER
+}
+
 enum JobStatus {
   SAVED
   WAITING
@@ -18,13 +23,13 @@ enum JobStatus {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String
-  passwordHash String
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String
+  passwordHash   String
   resetTokenHash String?
-  resetExpires DateTime?
-  createdAt    DateTime @default(now())
+  resetExpires   DateTime?
+  createdAt      DateTime  @default(now())
 
   profile        Profile?
   careerPlan     CareerPlan?
@@ -37,29 +42,30 @@ model User {
   references     Reference[]
   jobs           Job[]
   files          FileAsset[]
+  documents      Document[]
 }
 
 model Profile {
-  id                String  @id @default(cuid())
-  userId            String  @unique
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  fullName          String  @default("")
-  headline          String  @default("")
-  email             String  @default("")
-  phone             String  @default("")
-  location          String  @default("")
-  linkedin          String  @default("")
-  github            String  @default("")
-  website           String  @default("")
-  summary           String  @default("") @db.Text
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName          String   @default("")
+  headline          String   @default("")
+  email             String   @default("")
+  phone             String   @default("")
+  location          String   @default("")
+  linkedin          String   @default("")
+  github            String   @default("")
+  website           String   @default("")
+  summary           String   @default("") @db.Text
   currentSalary     Float?
-  salaryCurrency    String  @default("MYR")
-  salaryPeriod      String  @default("MONTH") // MONTH | YEAR
-  targetIncreaseMin Int     @default(20)
-  targetIncreaseMax Int     @default(30)
-  cvText            String? @db.Text
+  salaryCurrency    String   @default("MYR")
+  salaryPeriod      String   @default("MONTH") // MONTH | YEAR
+  targetIncreaseMin Int      @default(20)
+  targetIncreaseMax Int      @default(30)
+  cvText            String?  @db.Text
   cvFileId          String?
-  remindersEnabled  Boolean @default(true)
+  remindersEnabled  Boolean  @default(true)
   updatedAt         DateTime @updatedAt
 }
 
@@ -87,6 +93,7 @@ model Education {
   details       String[]
   sortOrder     Int      @default(0)
   createdAt     DateTime @default(now())
+
   @@index([userId])
 }
 
@@ -104,6 +111,7 @@ model Experience {
   bullets   String[]
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
+
   @@index([userId])
 }
 
@@ -115,6 +123,7 @@ model Skill {
   category  String   @default("General")
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
+
   @@index([userId])
 }
 
@@ -130,6 +139,7 @@ model Project {
   imageIds    String[]
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
+
   @@index([userId])
 }
 
@@ -143,6 +153,7 @@ model Certification {
   date      String   @default("")
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
+
   @@index([userId])
 }
 
@@ -154,6 +165,7 @@ model Publication {
   url       String   @default("")
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
+
   @@index([userId])
 }
 
@@ -168,6 +180,7 @@ model Reference {
   phone     String   @default("")
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
+
   @@index([userId])
 }
 
@@ -191,6 +204,7 @@ model Job {
   followUpAt     DateTime?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+
   @@index([userId, status])
 }
 
@@ -202,5 +216,21 @@ model FileAsset {
   mime      String
   data      Bytes
   createdAt DateTime @default(now())
+
   @@index([userId])
+}
+
+/// Editable CV / cover letter documents (rich text stored as sanitized HTML)
+model Document {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind       DocKind  @default(CV)
+  title      String
+  html       String   @default("") @db.Text
+  sourceName String   @default("")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId, kind])
 }

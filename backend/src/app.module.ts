@@ -9,6 +9,7 @@ import { ProfileModule } from './profile/profile.module';
 import { JobsModule } from './jobs/jobs.module';
 import { CvModule } from './cv/cv.module';
 import { FilesModule } from './files/files.module';
+import { DocumentsModule } from './documents/documents.module';
 import { RemindersService } from './reminders/reminders.service';
 import { HealthController } from './health.controller';
 
@@ -23,6 +24,7 @@ import { HealthController } from './health.controller';
     JobsModule,
     CvModule,
     FilesModule,
+    DocumentsModule,
   ],
   controllers: [HealthController],
   providers: [RemindersService, { provide: APP_GUARD, useClass: ThrottlerGuard }],
